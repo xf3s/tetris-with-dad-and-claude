@@ -11,13 +11,13 @@ const board = Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
 
 // --- Tetrominoes ---
 const PIECES = [
-  { shape: [[1, 1, 1, 1]],           color: 'cyan'   }, // I
-  { shape: [[1, 1], [1, 1]],         color: 'yellow' }, // O
-  { shape: [[0, 1, 0], [1, 1, 1]],   color: 'purple' }, // T
-  { shape: [[0, 1, 1], [1, 1, 0]],   color: 'green'  }, // S
-  { shape: [[1, 1, 0], [0, 1, 1]],   color: 'red'    }, // Z
-  { shape: [[1, 0, 0], [1, 1, 1]],   color: 'blue'   }, // J
-  { shape: [[0, 0, 1], [1, 1, 1]],   color: 'orange' }, // L
+  { shape: [[1, 1, 1, 1]],           color: '#4eb8c8' }, // I — muted cyan
+  { shape: [[1, 1], [1, 1]],         color: '#c8b84e' }, // O — muted yellow
+  { shape: [[0, 1, 0], [1, 1, 1]],   color: '#8e5fad' }, // T — muted purple
+  { shape: [[0, 1, 1], [1, 1, 0]],   color: '#5aad6b' }, // S — muted green
+  { shape: [[1, 1, 0], [0, 1, 1]],   color: '#b85555' }, // Z — muted red
+  { shape: [[1, 0, 0], [1, 1, 1]],   color: '#4e6eb8' }, // J — muted blue
+  { shape: [[0, 0, 1], [1, 1, 1]],   color: '#c87d3e' }, // L — muted orange
 ];
 
 // 7-bag randomizer: shuffle all 7 pieces, deal one at a time.
