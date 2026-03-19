@@ -91,11 +91,40 @@ function moveRight() {
   if (isValid(activePiece, newPos)) activePiece.pos = newPos;
 }
 
-// --- Keyboard input ---
+// --- Keyboard input with DAS (Delayed Auto Shift) ---
+// DAS: move once immediately on keydown, wait DAS_DELAY, then repeat at ARR rate.
+// This mimics official Tetris feel and is independent of OS key-repeat settings.
+const DAS_DELAY = 150; // ms before auto-repeat begins
+const ARR       = 50;  // ms between repeats while key is held
+
+const keys = {};         // which keys are currently held
+const dasTimers  = {};   // setTimeout handle for the initial DAS delay
+const arrTimers  = {};   // setInterval handle for the repeat
+
+function startDAS(key, action) {
+  action();
+  dasTimers[key] = setTimeout(() => {
+    arrTimers[key] = setInterval(action, ARR);
+  }, DAS_DELAY);
+}
+
+function stopDAS(key) {
+  clearTimeout(dasTimers[key]);
+  clearInterval(arrTimers[key]);
+}
+
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowLeft')  moveLeft();
-  if (e.key === 'ArrowRight') moveRight();
-  if (e.key === 'ArrowDown')  moveDown();
+  if (keys[e.key]) return; // ignore OS key-repeat events
+  keys[e.key] = true;
+
+  if (e.key === 'ArrowLeft')  startDAS('ArrowLeft',  moveLeft);
+  if (e.key === 'ArrowRight') startDAS('ArrowRight', moveRight);
+  if (e.key === 'ArrowDown')  startDAS('ArrowDown',  moveDown);
+});
+
+document.addEventListener('keyup', (e) => {
+  keys[e.key] = false;
+  stopDAS(e.key);
 });
 
 // --- Drawing ---
